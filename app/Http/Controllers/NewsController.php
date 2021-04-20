@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\News;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
 class NewsController extends Controller
@@ -33,4 +34,9 @@ class NewsController extends Controller
         return view('news.card',['news'=>$card]);
     }
 
+    public function feedback(){
+        dd($_POST);
+        return view('news.feedback');
+        //`1312
+    }
 }
