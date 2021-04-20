@@ -31,12 +31,6 @@ Route::group([
 });
 
 
-
-
-
-
-
-
 /** Админка новостей */
 Route::group([
     'prefix' => '/admin/news',
@@ -44,7 +38,7 @@ Route::group([
 ], function () {
     Route::get('/', [AdminNewsController::class, 'index'] )
         ->name('index');
-    Route::get('/create',[AdminNewsController::class, 'create'])
+    Route::match(['get','post'],'/create',[AdminNewsController::class, 'create'])
         ->name('create');
     Route::get('/update',[AdminNewsController::class, 'update'])
         ->name('update');
