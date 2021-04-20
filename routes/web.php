@@ -28,8 +28,12 @@ Route::group([
         ->where('id', '[0-9]+')
         ->name('list');
 
+
+
 });
 
+Route::match(['get','post'],'/feedback',[NewsController::class,'feedback'])
+    ->name('feedback');
 
 /** Админка новостей */
 Route::group([
