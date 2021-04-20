@@ -37,5 +37,6 @@ class NewsController extends Controller
     public function feedback(){
         dd($_POST);
         return view('news.feedback');
+        //`1312
     }
 }
