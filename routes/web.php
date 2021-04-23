@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use \App\Http\Controllers\DbController;
+use \App\Http\Controllers\Admin\CategoryDBcontroller;
 
 
 Route::get('/', function () {
@@ -16,7 +17,7 @@ Route::get('/', function () {
 Route::group([
     'prefix' => 'news',
     'as' => 'news::'
-], function() {
+], function () {
 
     Route::get('/', [NewsController::class, 'index'])
         ->name("categories");
@@ -31,23 +32,25 @@ Route::group([
 
 });
 
-Route::match(['get','post'],'/feedback',[NewsController::class,'feedback'])
+Route::match(['get', 'post'], '/feedback', [NewsController::class, 'feedback'])
     ->name('feedback');
 
-Route::get('/db',[DbController::class,'index']);
+Route::get('/db', [DbController::class, 'index']);
 
 /** Админка новостей */
 Route::group([
     'prefix' => '/admin/news',
     'as' => 'admin::news::',
 ], function () {
-    Route::get('/', [AdminNewsController::class, 'index'] )
+    Route::get('/', [AdminNewsController::class, 'index'])
         ->name('index');
-    Route::match(['get','post'],'/create',[AdminNewsController::class, 'create'])
+    Route::match(['get', 'post'], '/create', [AdminNewsController::class, 'create'])
         ->name('create');
-    Route::get('/update',[AdminNewsController::class, 'update'])
+    Route::get('/update', [AdminNewsController::class, 'update'])
         ->name('update');
-    Route::get('/delete',[AdminNewsController::class, 'delete'])
+    Route::get('/delete', [AdminNewsController::class, 'delete'])
         ->name('delete');
+    Route::get('/db', [CategoryDbController::class, 'index']);
+
 });
 
