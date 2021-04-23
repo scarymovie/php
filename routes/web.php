@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use \App\Http\Controllers\DbController;
 
 
 Route::get('/', function () {
@@ -30,6 +31,10 @@ Route::group([
 
 });
 
+Route::match(['get','post'],'/feedback',[NewsController::class,'feedback'])
+    ->name('feedback');
+
+Route::get('/db',[DbController::class,'index']);
 
 /** Админка новостей */
 Route::group([

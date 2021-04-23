@@ -11,4 +11,8 @@ class AdminNewsController extends Controller
         echo"здесь надо будет тыкнуть чтобы создать статью";
         exit;
     }
+
+    public function show(){
+
+    }
 }
