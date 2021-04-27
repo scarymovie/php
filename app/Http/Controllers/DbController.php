@@ -21,7 +21,7 @@ class DbController extends Controller
 //        $result = DB::insert($sql,[':content'=>'test']);
 //        dd($result);
 
-        $sql = "SELECT * FROM test";
+        $sql = "SELECT * FROM categories";
         $result = DB::select($sql);
         dd($result);
     }

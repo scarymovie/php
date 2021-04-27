@@ -1,64 +1,60 @@
 <?php
 
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class News
+/**
+ * App\Models\News
+ *
+ * @property int $id
+ * @property string $title
+ * @property string|null $description
+ * @property string|null $source
+ * @property string|null $publish_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int $category_id
+ * @method static \Illuminate\Database\Eloquent\Builder|News newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|News newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|News query()
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News wherePublishDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+class News extends Model
 {
-    private $news = [
-        1 => [
-            'id' => 1,
-            'title' => 'news 1',
-            'content' => 'news 1 content',
-            'category_id' => 1
-        ],
-        2 => [
-            'id' => 2,
-            'title' => 'news 2',
-            'content' => 'new2 content',
-            'category_id' => 2
-        ],
-        3 => [
-            'id' => 3,
-            'title' => 'news 3',
-            'content' => 'new3 content',
-            'category_id' => 3
-        ],
-        4 => [
-            'id' => 4,
-            'title' => 'news 4',
-            'content' => 'new4 content',
-            'category_id' => 1
-        ],
-        5 => [
-            'id' => 5,
-            'title' => 'news 5',
-            'content' => 'new5 content',
-            'category_id' => 2
-        ]
+    use HasFactory;
+
+    protected $fillabe = [
+        'title',
+        'description'
     ];
 
 
-    public function getByCategoryId(int $categoryId)
-    {
-        $news = [];
-        foreach ($this->news as $id => $item) {
-            if($item['category_id'] == $categoryId) {
-                $news[$id] = $item;
-            }
-        }
-        return $news;
+    /**
+     * @param int $categoryId
+     * @return News[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getByCategoryId(int $categoryId){
+        return static::query()
+            ->with(['category'])
+            ->where('category_id',$categoryId)
+            ->get();
     }
 
-    public function getByCardId ($cardId){
-        $card = [];
-        foreach($this->news as $key =>$value){
-            if ($value['category_id'] == $cardId ) {
-                $card[$key] = $value;
-            }
-        }
-        return $card;
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
 }

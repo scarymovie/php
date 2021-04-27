@@ -22,8 +22,8 @@ Route::group([
     Route::get('/', [NewsController::class, 'index'])
         ->name("categories");
 
-    Route::get('/card/{id}', [NewsController::class, 'card'])
-        ->where('id', '[0-9]+')
+    Route::get('/card/{news}', [NewsController::class, 'card'])
+        ->where('news', '[0-9]+')
         ->name('card');
 
     Route::get('/{categoryId}', [NewsController::class, 'list'])
@@ -38,19 +38,22 @@ Route::match(['get', 'post'], '/feedback', [NewsController::class, 'feedback'])
 Route::get('/db', [DbController::class, 'index']);
 
 /** Админка новостей */
-Route::group([
-    'prefix' => '/admin/news',
-    'as' => 'admin::news::',
-], function () {
-    Route::get('/', [AdminNewsController::class, 'index'])
-        ->name('index');
-    Route::match(['get', 'post'], '/create', [AdminNewsController::class, 'create'])
-        ->name('create');
-    Route::get('/update', [AdminNewsController::class, 'update'])
-        ->name('update');
-    Route::get('/delete', [AdminNewsController::class, 'delete'])
-        ->name('delete');
-    Route::get('/db', [CategoryDbController::class, 'index']);
 
-});
+Route::prefix('/admin/news')
+    ->as('admin::news')
+    ->group(function(){
+        Route::get('/', [AdminNewsController::class, 'index'])
+            ->name('index')->middleware('role:admin');
+        Route::match(['get', 'post'], '/create', [AdminNewsController::class, 'create'])
+            ->name('create')->middleware('role:admin');
+        Route::get('/update', [AdminNewsController::class, 'update'])
+            ->name('update')->middleware('role:admin');
+        Route::get('/delete', [AdminNewsController::class, 'delete'])
+            ->name('delete')->middleware('role:admin');
+        Route::get('/db', [CategoryDbController::class, 'index'])->middleware('role:admin');
+    });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

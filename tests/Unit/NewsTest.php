@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Models\News;
+use App\Models\NewsOld;
 use PHPUnit\Framework\TestCase;
 
 class NewsTest extends TestCase
@@ -14,7 +14,7 @@ class NewsTest extends TestCase
      */
     public function test_example()
     {
-        $model = new News();
+        $model = new NewsOld();
         $data =  $model->getByCategoryId(1);
         $this->assertIsArray($data);
         $this->assertNotEmpty($data);

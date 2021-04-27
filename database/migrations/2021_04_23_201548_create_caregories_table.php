@@ -15,19 +15,18 @@ class CreateCaregoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title', '50')
+            $table->string('name', '100')
                 ->unique()
                 ->nullable(false);
-            $table->text('description')
-                ->nullable(true);
-            $table->text('amount')
-                ->nullable(true);
-            $table->string('source', '100')
-                ->nullable(true);
-            $table->dateTime('publish_date')
-                ->nullable(true);
             $table->timestamps();
-            $table->softDeletes();
+        });
+        Schema::table('news', function (Blueprint $table){
+            $table->bigInteger('category_id')
+            ->unsigned()
+            ->index();
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories');
         });
     }
 
@@ -39,5 +38,6 @@ class CreateCaregoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('caregories');
+        Schema::dropColumns('news',['category_id']);
     }
 }
