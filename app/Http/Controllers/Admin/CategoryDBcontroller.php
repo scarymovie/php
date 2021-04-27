@@ -11,7 +11,6 @@ class CategoryDBcontroller extends Controller
     public function index()
     {
         $categories = DB::table('categories')->get();
-//dd($categories);
 return view('admin.news.showNews', ['categories'=>$categories]);
     }
 }
