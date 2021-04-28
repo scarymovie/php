@@ -4,9 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Админка - @yield('title')</title>
+    <script src="https://cdn.tiny.cloud/1/7d1zsylphpel3hlzk1aoha54bnolbo2jytsk97uruu2sty74/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/admin/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -35,12 +38,8 @@
     </div>
 
 
-
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
-
             <span class="brand-text font-weight-light">Админ панель</span>
         </a>
 
@@ -55,7 +54,8 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
@@ -76,13 +76,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="./index.html" class="nav-link ">
-                                    <p>Все статьи</p>
+                                <a href="{{route('news.index')}}" class="nav-link ">
+                                    <p>Все новости</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
-                                    <p>Добавить статью</p>
+                                <a href="{{route('news.create')}}" class="nav-link">
+                                    <p>Добавить новость</p>
                                 </a>
                             </li>
 
@@ -112,7 +112,6 @@
                     </li>
 
 
-
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -122,7 +121,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-@yield('content')
+        @yield('content')
     </div>
     <!-- /.content-wrapper -->
 
@@ -170,5 +169,6 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/admin/dist/js/pages/dashboard.js"></script>
 <script src="/admin/admin.js"></script>
+
 </body>
 </html>

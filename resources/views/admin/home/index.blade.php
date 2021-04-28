@@ -25,7 +25,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{$posts}}</h3>
+                            <h3>{{$news}}</h3>
 
                             <p>Новости</p>
                         </div>

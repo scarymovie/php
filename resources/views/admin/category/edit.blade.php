@@ -1,6 +1,6 @@
-@extends('layouts.Admin.admin')
+@extends('layouts.admin_layout')
 
-@section('title', 'Добавить новость')
+@section('title', 'Редактирование категории')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Добавить новость</h1>
+                    <h1 class="m-0">Редактирование категории: {{ $category->title }}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
             @if (session('success'))
@@ -20,46 +20,33 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card card-primary">
-                        <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route('news.store')}}" method="POST">
+                        <form action="{{ route('category.update', $category->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Название</label>
-                                    <input type="text" name="title" class="form-control" id="exampleInputEmail1"
-                                           placeholder="Введите название новости" required>
+                                    <input type="text" value="{{ $category->title }}" name="title" class="form-control"
+                                           id="exampleInputEmail1" placeholder="Введите название категории" required>
                                 </div>
-                                    <div class="form-group">
-                                        <label>Выбрать категорию</label>
-                                        <select name="category_id" class="form-control" required>
-                                            @foreach($categories as $category)
-                                                <option value="{{$category->id}}">{{$category->name}}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                            </div>
-                            <div class="form-group">
-                                <textarea name="description" class="editor">
-                                </textarea>
                             </div>
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Добавить</button>
+                                <button type="submit" class="btn btn-primary">Обновить</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

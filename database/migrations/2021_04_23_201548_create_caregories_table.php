@@ -20,7 +20,7 @@ class CreateCaregoriesTable extends Migration
                 ->nullable(false);
             $table->timestamps();
         });
-        Schema::table('news', function (Blueprint $table){
+        Schema::table('newsOld', function (Blueprint $table){
             $table->bigInteger('category_id')
             ->unsigned()
             ->index();
@@ -38,6 +38,6 @@ class CreateCaregoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('caregories');
-        Schema::dropColumns('news',['category_id']);
+        Schema::dropColumns('newsOld',['category_id']);
     }
 }

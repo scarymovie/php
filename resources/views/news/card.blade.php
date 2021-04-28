@@ -8,7 +8,7 @@
 @section('content')
     @forelse($news as $id => $item)
         @php
-            $url = route('news::card', ['news' => $id])
+            $url = route('newsOld::card', ['newsOld' => $id])
         @endphp
 
         <div>

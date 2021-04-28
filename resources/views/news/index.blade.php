@@ -5,7 +5,7 @@
 @foreach($categories as $id => $name)
 
     @php
-        $url = route('news::list', ['categoryId' => $id])
+        $url = route('newsOld::list', ['categoryId' => $id])
     @endphp
 
     <ul>

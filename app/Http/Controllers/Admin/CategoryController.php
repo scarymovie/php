@@ -66,9 +66,11 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('admin.category.edit', [
+            'category' => $category
+    ]);
     }
 
     /**
@@ -78,9 +80,12 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $category->title = $request->title;
+        $category->save();
+
+        return redirect()->back()->withSuccess('Категория была успешно обновлена!');
     }
 
     /**
@@ -89,8 +94,9 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->back()->withSuccess('Категория была успешно удалена!');
     }
 }

@@ -47,7 +47,7 @@
                                     </td>
 
                                     <td class="project-actions text-right">
-                                        <a class="btn btn-info btn-sm" href="#">
+                                        <a class="btn btn-info btn-sm" href="{{ route('category.edit', $category->id) }}">
                                             <i class="fas fa-pencil-alt">
                                             </i>
                                             Редактировать

@@ -2,44 +2,110 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Category;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\News;
+use Illuminate\Http\Request;
+use DB;
+use phpDocumentor\Reflection\DocBlock\Description;
 
 class NewsController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $categories = DB::table('categories')->count();
-        $posts = News::count();
-        return view('admin.home.index', [
-            'posts' =>$posts,
+        $news = News::orderBy('created_at', 'DESC')->get();
+        return view('admin.news.index', [
+            'news' => $news
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $categories = Category::orderBy('created_at', 'DESC')->get();
+            //DB::table('categories')->orderBy('created_at')->get();
+        return view('admin.news.create', [
             'categories' => $categories
         ]);
     }
 
-    public function create(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        return response('admin.news.create');
+        $news = new News();
+        $news->title=$request->title;
+        $news->description=$request->description;
+        $news->category_id=$request->category_id;
+        $news->save();
+
+        return redirect()->back()->withSuccess('Новость была успешно добавлена');
     }
 
-    public function save()
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+    public function show(News $news)
     {
-        return redirect()->route('admin::news::create');
+        //
     }
 
-    public function update()
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(News $news)
     {
-
+        $categories = Category::orderBy('created_at','DESC')->get();
+        return view('admin.news.edit', [
+           'categories' => $categories,
+            'news' => $news
+        ]);
     }
-
-    public function delete()
+//
+//    /**
+//     * Update the specified resource in storage.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @param  \App\Models\News  $post
+//     * @return \Illuminate\Http\Response
+//     */
+    public function update(Request $request, News $news)
     {
+        $news->title=$request->title;
+        $news->description=$request->description;
+        $news->category_id=$request->category_id;
+        $news->save();
 
+        return redirect()->back()->withSuccess('Новость была успешно изменена');
     }
 
-    public function show(){
-
-    }
+//    /**
+//     * Remove the specified resource from storage.
+//     *
+//     * @param  \App\Models\News  $post
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function destroy(News $post)
+//    {
+//        //
+//    }
 }
