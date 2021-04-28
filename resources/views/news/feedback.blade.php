@@ -1,5 +1,5 @@
-@extends('layouts.main')
 
+@extends('layouts.app')
 @section('title')
     feedback
 @endsection
