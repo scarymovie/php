@@ -42,6 +42,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            "title" =>"required|string|min:2|max:50|unique:news",
+        ];
+
+        $this->validate($request,$rules);
+
         $new_category =  new Category();
         $new_category->name = $request->name;
         $new_category->save();
