@@ -1,6 +1,6 @@
 @extends('layouts.Admin.admin')
 
-@section('title', 'Добавить новость')
+@section('title', 'Редактировать новость')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Добавить новость</h1>
+                    <h1 class="m-0">Редактировать: {{$news->title}}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
             @if (session('success'))
@@ -28,32 +28,37 @@
                     <div class="card card-primary">
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route('news.store')}}" method="POST">
+                        <form action="
+{{route('news.update',$news->id)}}
+                            " method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Название</label>
-                                    <input type="text" name="title" class="form-control" id="exampleInputEmail1"
+                                    <input type="text" value="{{$news->title}}" name="title" class="form-control" id="exampleInputEmail1"
                                            placeholder="Введите название новости" required>
                                 </div>
-                                    <div class="form-group">
-                                        <label>Выбрать категорию</label>
-                                        <select name="category_id" class="form-control" required>
-                                            @foreach($categories as $category)
-                                                <option value="{{$category->id}}">{{$category->name}}</option>
-                                            @endforeach
+                                <div class="form-group">
+                                    <label>Выбрать категорию</label>
+                                    <select name="category_id" class="form-control" required>
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}"@if($category->id == $news->category_id) selected @endif>
+                                                {{$category->name}}</option>
+                                        @endforeach
 
-                                        </select>
-                                    </div>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <textarea name="description" class="editor">
+                                    {{$news->title}}
                                 </textarea>
                             </div>
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Добавить</button>
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
                             </div>
                         </form>
                     </div>

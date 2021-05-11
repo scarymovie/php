@@ -1,6 +1,6 @@
 @extends('layouts.Admin.admin')
 
-@section('title', 'Добавить новость')
+@section('title', 'Добавить категорию')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Добавить новость</h1>
+                    <h1 class="m-0">Добавить категорию</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
             @if (session('success'))
@@ -28,27 +28,14 @@
                     <div class="card card-primary">
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route('news.store')}}" method="POST">
+                        <form action="{{route('category.store')}}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Название</label>
-                                    <input type="text" name="title" class="form-control" id="exampleInputEmail1"
-                                           placeholder="Введите название новости" required>
+                                    <input type="text" name="name" class="form-control" id="exampleInputEmail1"
+                                           placeholder="Введите название категории" required>
                                 </div>
-                                    <div class="form-group">
-                                        <label>Выбрать категорию</label>
-                                        <select name="category_id" class="form-control" required>
-                                            @foreach($categories as $category)
-                                                <option value="{{$category->id}}">{{$category->name}}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                            </div>
-                            <div class="form-group">
-                                <textarea name="description" class="editor">
-                                </textarea>
                             </div>
                             <!-- /.card-body -->
 

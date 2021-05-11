@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\NewsController;
-use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\NewsControllerOld as AdminNewsController;
 use \App\Http\Controllers\DbController;
-use \App\Http\Controllers\Admin\CategoryDBcontroller;
+use App\Http\Controllers\Admin\CategoryController;
+use \App\Http\Controllers\Admin\NewsController;
 
 
 Route::get('/', function () {
@@ -22,8 +22,8 @@ Route::group([
     Route::get('/', [NewsController::class, 'index'])
         ->name("categories");
 
-    Route::get('/card/{id}', [NewsController::class, 'card'])
-        ->where('id', '[0-9]+')
+    Route::get('/card/{newsOld}', [NewsController::class, 'card'])
+        ->where('newsOld', '[0-9]+')
         ->name('card');
 
     Route::get('/{categoryId}', [NewsController::class, 'list'])
@@ -38,19 +38,16 @@ Route::match(['get', 'post'], '/feedback', [NewsController::class, 'feedback'])
 Route::get('/db', [DbController::class, 'index']);
 
 /** Админка новостей */
-Route::group([
-    'prefix' => '/admin/news',
-    'as' => 'admin::news::',
-], function () {
-    Route::get('/', [AdminNewsController::class, 'index'])
-        ->name('index');
-    Route::match(['get', 'post'], '/create', [AdminNewsController::class, 'create'])
-        ->name('create');
-    Route::get('/update', [AdminNewsController::class, 'update'])
-        ->name('update');
-    Route::get('/delete', [AdminNewsController::class, 'delete'])
-        ->name('delete');
-    Route::get('/db', [CategoryDbController::class, 'index']);
 
-});
+Route::middleware('role:admin')->prefix('/adminPanel')
+    ->group(function(){
+        Route::match(['get','post'],'/', [AdminNewsController::class, 'index'])
+            ->name('index');
+        Route::resource( 'category', CategoryController::class);
+        Route::resource('news', NewsController::class);
+    });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

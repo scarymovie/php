@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use \DB;
+use App\Models\Category;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = DB::table('categories')->orderBy('created_at')->get();
+        //$categories = Category::orderBy('created_at', 'desc')->get();
+
+        return view('admin.category.index', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -25,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');
     }
 
     /**
@@ -36,7 +42,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $new_category =  new Category();
+        $new_category->name = $request->name;
+        $new_category->save();
+
+        return redirect()->back()->withSuccess('Категория успешно добавлена');
     }
 
     /**
@@ -56,9 +66,11 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('admin.category.edit', [
+            'category' => $category
+    ]);
     }
 
     /**
@@ -68,9 +80,12 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $category->title = $request->title;
+        $category->save();
+
+        return redirect()->back()->withSuccess('Категория была успешно обновлена!');
     }
 
     /**
@@ -79,8 +94,9 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->back()->withSuccess('Категория была успешно удалена!');
     }
 }

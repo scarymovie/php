@@ -1,5 +1,5 @@
-@extends('layouts.main')
 
+@extends('layouts.app')
 @section('title')
     @parent
     Список новостей
@@ -8,7 +8,7 @@
 @section('content')
     @forelse($news as $id => $item)
         @php
-            $url = route('news::card', ['id' => $id])
+            $url = route('newsOld::card', ['newsOld' => $id])
         @endphp
 
         <div>
@@ -18,4 +18,4 @@
         Новостей нет
     @endforelse
 @endsection
-@dump($news)
+

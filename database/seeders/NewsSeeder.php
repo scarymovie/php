@@ -30,6 +30,7 @@ class NewsSeeder extends Seeder
             'title' =>$this->faker->text(50),
             'description' =>$this->faker->text(),
             'source' =>$this->faker->url,
+            'category_id'=>1,
             'publish_date' =>$this->faker->date(),
         ];
         return $data;
